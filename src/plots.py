@@ -40,6 +40,7 @@ def latency_by_dataset(df):
     ax.set_xticklabels(DATASET_ORDER)
     ax.set_ylabel("Mean lookup time (microseconds, Python)")
     ax.set_title(f"Lookup latency per dataset (n ~ {n:,})")
+    ax.set_ylim(0, ax.get_ylim()[1] * 1.35)
     ax.legend()
     save(fig, "fig1_latency_by_dataset.png")
 
