@@ -1,7 +1,7 @@
 """Baselines the learned index must beat: a real B-Tree and plain binary search."""
 from bisect import bisect_left
 
-from BTrees.OOBTree import OOBTree
+from BTrees.OOBTree import OOBTree  # type: ignore  
 
 
 class BTreeIndex:
