@@ -39,10 +39,17 @@ Results appear in `results/` (`results.csv` and the figures).
 - Correctness of every index on every dataset
 
 ## Results
-_Fill this section with YOUR numbers after running `python run_all.py`. Paste the figures from `results/` and write 3-5 sentences on each:_
-1. Size: how much smaller is the RMI than the B-Tree?
-2. Speed: scalar lookups and batch lookups. Is the learned index faster or slower here, and why?
-3. Datasets: which distribution is hardest for the models? How does the number of models change the window?
+![Latency](results/fig1_latency_by_dataset.png)
+![Size](results/fig2_size_vs_models.png)
+![Window](results/fig3_window_vs_models.png)
+![Trade-off](results/fig4_tradeoff.png)
+![Batch](results/fig5_batch_comparison.png)
+
+**Key findings (1M keys):**
+- **Size:** the RMI with 1,000 models takes about 24 KB versus an estimated 24 MB for the B-Tree, roughly 1,000x smaller.
+- **Speed:** learned indexes beat the B-Tree on uniform keys but are slower on lognormal and clustered keys. Plain binary search was fastest in this Python implementation.
+- **Accuracy:** uniform keys are easy for the models. Lognormal keys need 1,000+ models. On clustered keys the search window stayed near 65,000 positions at every model count, which suggests a limitation of the single-model stage-1 router.
+- **Batch mode:** NumPy's C binary search was about 2x faster than my vectorised RMI.
 
 ## Limitations (be honest about these in the report)
 - **Python overhead.** The B-Tree and `bisect` run in optimised C, while the learned index does its arithmetic in Python. Scalar timings therefore favour the baselines. The batch comparison removes the loop overhead and is the fairer speed comparison; a C/C++ implementation would be the real test (as in the paper).
